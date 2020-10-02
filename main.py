@@ -43,23 +43,17 @@ def NearestRightPoint(kd_node, line, best=None):
     if kd_node is not None:
         curr_root = kd_node[2]
         dist = curr_root[0] - line
-        print(dist)
-        print(curr_root)
         if dist > 0:
             if not best:
                 best = [dist, curr_root]
             elif dist < best[0]:
                 best = [dist, curr_root]
-        print('best:')
-        print(best)
         direction = 0 if curr_root[0] > line else 1
         if kd_node[direction]:
             return NearestRightPoint(kd_node[direction], line, best)
     return best if best else NULL
 
 def main():
-    print("start main")
-
     # build tree
     points = [(random.randint(0,100),random.randint(0,100)) for x in range(1000)]
     tree = BuildTree(points)
