@@ -1,4 +1,5 @@
 import random
+import math
 
 # each node the left side is at points[0] 
 # and the right side is at points[1] 
@@ -12,8 +13,8 @@ def BuildTree(points, i=0):
         i = (i + 1) % dimention
         half = len(points) >> 1
         return [
-            BuildTree(points[: half], dimention, i),
-            BuildTree(points[half + 1:], dimention, i),
+            BuildTree(points[: half], i),
+            BuildTree(points[half + 1:], i),
             points[half]
         ]
     elif len(points) == 1:
@@ -29,32 +30,33 @@ def add_point(kd_node, point, i=0):
                 kd_node[j] = [None, None, point]
             elif c:
                 add_point(kd_node[j], point, dimention, i)
-# calc distance
-def dist_func(a, b, dim=dimention):
-    return sum((a[i] - b[i]) ** 2 for i in range(dim))
 
-# For the closest neighbor
-def nearest_right_point(kd_node, point, dim=dimention, dist_func=dist_func, return_distances=True, i=0, best=None):
-    if kd_node is not None:
-        dist = dist_func(point, kd_node[2])
-        dx = kd_node[2][i] - point[i]
+NULL = [0, (0,0)]
+
+def nearest_right_point(kd_node, line, best=None):
+    if not kd_node:
+        return NULL
+    curr_root = kd_node[2]
+    dist = curr_root[0] - line
+
+    if dist > 0:
         if not best:
-            best = [dist, kd_node[2]]
+            best = [dist, curr_root]
         elif dist < best[0]:
-            best[0], best[1] = dist, kd_node[2]
-        i = (i + 1) % dimention
-        # Goes into the left branch, and then the right branch if needed
-        for b in [dx < 0] + [dx >= 0] * (dx * dx < best[0]):
-            nearest_right_point(kd_node[b], point, dimention, dist_func, return_distances, i, best)
-    return best if return_distances else best[1]
+            best = [dist, curr_root]
 
-    
+    direction = 0 if curr_root[0] > line else 1
+    if kd_node[direction]:
+        nearest_right_point(kd_node[direction], line, best)
+    return best if best else NULL
 
 def main():
     print("start main")
     points = [(random.randint(0,100),random.randint(0,100)) for x in range(1000)]
     tree = BuildTree(points)
-    print(nearest_right_point(tree, [0] * dimention))
+    result = nearest_right_point(tree, 20)
+    print('not found' if result == NULL
+    else 'distance: ' + str(result[0]) + ' point: ' + str(result[1]))
 
 if __name__ == '__main__':
     main()
