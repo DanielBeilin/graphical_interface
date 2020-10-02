@@ -24,17 +24,6 @@ def BuildTree(points, i=0):
     elif len(points) == 1:
         return [None, None, points[0]]
 
-# Adds a point to the kd-tree
-def add_point(kd_node, point, i=0):
-    if kd_node is not None:
-        dx = kd_node[2][i] - point[i]
-        i = (i + 1) % dimention
-        for j, c in ((0, dx >= 0), (1, dx < 0)):
-            if c and kd_node[j] is None:
-                kd_node[j] = [None, None, point]
-            elif c:
-                add_point(kd_node[j], point, dimention, i)
-
 # null object if nearest point not found
 NULL = [0, (0,0)]
 
@@ -61,7 +50,7 @@ def main():
     # finds nearest
     line = input('enter the line coordinates: ')
     result = NearestRightPoint(tree, int(line))
-    print('distance: ' + str(result[0]) + ' point: ' + str(result[1]))
+    print(f'distance: {result[0]} point: {result[1]}')
 
 if __name__ == '__main__':
     main()
