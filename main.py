@@ -39,7 +39,7 @@ def add_point(kd_node, point, i=0):
 NULL = [0, (0,0)]
 
 # finds nearest point to given line from the right
-def nearest_right_point(kd_node, line, best=None):
+def NearestRightPoint(kd_node, line, best=None):
     if not kd_node:
         return NULL
     curr_root = kd_node[2]
@@ -53,7 +53,7 @@ def nearest_right_point(kd_node, line, best=None):
 
     direction = 0 if curr_root[0] > line else 1
     if kd_node[direction]:
-        nearest_right_point(kd_node[direction], line, best)
+        NearestRightPoint(kd_node[direction], line, best)
     return best if best else NULL
 
 def main():
@@ -64,9 +64,8 @@ def main():
     tree = BuildTree(points)
 
     # finds nearest
-    line = random.randint(0, 100)
-    print('line is: ' + str(line))
-    result = nearest_right_point(tree, line)
+    line = input('enter the line coordinates: ')
+    result = NearestRightPoint(tree, int(line))
     print('not found' if result == NULL
     else 'distance: ' + str(result[0]) + ' point: ' + str(result[1]))
 
