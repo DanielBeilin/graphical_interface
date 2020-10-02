@@ -1,3 +1,6 @@
+# פולה דיניץ - 206978983
+# דניאל ביילין - 207387622
+
 import random
 import math
 
@@ -7,6 +10,7 @@ import math
 
 dimention = 2
 
+# build tree from given points
 def BuildTree(points, i=0):
     if len(points) > 1:
         points.sort(key=lambda point: point[i])
@@ -31,8 +35,10 @@ def add_point(kd_node, point, i=0):
             elif c:
                 add_point(kd_node[j], point, dimention, i)
 
+# null object if nearest point not found
 NULL = [0, (0,0)]
 
+# finds nearest point to given line from the right
 def nearest_right_point(kd_node, line, best=None):
     if not kd_node:
         return NULL
@@ -52,9 +58,15 @@ def nearest_right_point(kd_node, line, best=None):
 
 def main():
     print("start main")
+
+    # build tree
     points = [(random.randint(0,100),random.randint(0,100)) for x in range(1000)]
     tree = BuildTree(points)
-    result = nearest_right_point(tree, 20)
+
+    # finds nearest
+    line = random.randint(0, 100)
+    print('line is: ' + str(line))
+    result = nearest_right_point(tree, line)
     print('not found' if result == NULL
     else 'distance: ' + str(result[0]) + ' point: ' + str(result[1]))
 
