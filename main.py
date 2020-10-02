@@ -40,20 +40,21 @@ NULL = [0, (0,0)]
 
 # finds nearest point to given line from the right
 def NearestRightPoint(kd_node, line, best=None):
-    if not kd_node:
-        return NULL
-    curr_root = kd_node[2]
-    dist = curr_root[0] - line
-
-    if dist > 0:
-        if not best:
-            best = [dist, curr_root]
-        elif dist < best[0]:
-            best = [dist, curr_root]
-
-    direction = 0 if curr_root[0] > line else 1
-    if kd_node[direction]:
-        NearestRightPoint(kd_node[direction], line, best)
+    if kd_node is not None:
+        curr_root = kd_node[2]
+        dist = curr_root[0] - line
+        print(dist)
+        print(curr_root)
+        if dist > 0:
+            if not best:
+                best = [dist, curr_root]
+            elif dist < best[0]:
+                best = [dist, curr_root]
+        print('best:')
+        print(best)
+        direction = 0 if curr_root[0] > line else 1
+        if kd_node[direction]:
+            return NearestRightPoint(kd_node[direction], line, best)
     return best if best else NULL
 
 def main():
@@ -66,8 +67,7 @@ def main():
     # finds nearest
     line = input('enter the line coordinates: ')
     result = NearestRightPoint(tree, int(line))
-    print('not found' if result == NULL
-    else 'distance: ' + str(result[0]) + ' point: ' + str(result[1]))
+    print('distance: ' + str(result[0]) + ' point: ' + str(result[1]))
 
 if __name__ == '__main__':
     main()
