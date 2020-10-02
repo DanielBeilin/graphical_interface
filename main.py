@@ -10,19 +10,25 @@ import math
 
 dimention = 2
 
-# build tree from given points
-def BuildTree(points, i=0):
+
+def tree_constructor(points,i=0):
     if len(points) > 1:
         points.sort(key=lambda point: point[i])
         i = (i + 1) % dimention
         half = len(points) >> 1
         return [
-            BuildTree(points[: half], i),
-            BuildTree(points[half + 1:], i),
+            tree_constructor(points[: half], i),
+            tree_constructor(points[half + 1:], i),
             points[half]
         ]
     elif len(points) == 1:
         return [None, None, points[0]]
+
+# build tree from given points
+def BuildTree():
+    points = [(random.randint(0,100),random.randint(0,100)) for x in range(1000)]
+    tree = tree_constructor(points)
+    return tree
 
 # null object if nearest point not found
 NULL = [0, (0,0)]
@@ -44,8 +50,7 @@ def NearestRightPoint(node, line, best=None):
 
 def main():
     # build tree
-    points = [(random.randint(0,100),random.randint(0,100)) for x in range(1000)]
-    tree = BuildTree(points)
+    tree = BuildTree()
 
     # finds nearest
     line = input('enter the line coordinates: ')
