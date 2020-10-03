@@ -24,7 +24,7 @@ def add_point(tree, point):
 # build tree from given points
 def BuildTree():
     tree = [None,None,(random.uniform(0,100),random.uniform(0,100))]
-    for i in range(10):
+    for i in range(1000):
         point=(random.uniform(0,100),random.uniform(0,100))
         add_point(tree,point)
     return tree
