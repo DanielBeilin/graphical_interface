@@ -23,8 +23,6 @@ def add_point(tree, point):
 
 # build tree from given points
 def BuildTree():
-    #points = [(random.uniform(0,100),random.uniform(0,100)) for x in range(1000)]
-    #tree = tree_constructor(points)
     tree = [None,None,(random.uniform(0,100),random.uniform(0,100))]
     for i in range(10):
         point=(random.uniform(0,100),random.uniform(0,100))
@@ -52,7 +50,6 @@ def NearestRightPoint(node, line, best=None):
 def main():
     # build tree
     tree = BuildTree()
-    print(tree)
     # finds nearest
     line = input('enter the line coordinates: ')
     result = NearestRightPoint(tree, float(line))
