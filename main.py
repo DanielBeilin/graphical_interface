@@ -26,7 +26,7 @@ def tree_constructor(points,i=0):
 
 # build tree from given points
 def BuildTree():
-    points = [(random.randint(0,100),random.randint(0,100)) for x in range(1000)]
+    points = [(random.uniform(0,100),random.uniform(0,100)) for x in range(1000)]
     tree = tree_constructor(points)
     return tree
 
@@ -54,7 +54,7 @@ def main():
 
     # finds nearest
     line = input('enter the line coordinates: ')
-    result = NearestRightPoint(tree, int(line))
+    result = NearestRightPoint(tree, float(line))
     print(f'distance: {result[0]} point: {result[1]}')
 
 if __name__ == '__main__':
