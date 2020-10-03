@@ -8,26 +8,27 @@ import math
 # and the right side is at points[1] 
 # and the root is at points[2]
 
-dimention = 2
-
-
-def tree_constructor(points,i=0):
-    if len(points) > 1:
-        points.sort(key=lambda point: point[i])
-        i = (i + 1) % dimention
-        half = len(points) >> 1
-        return [
-            tree_constructor(points[: half], i),
-            tree_constructor(points[half + 1:], i),
-            points[half]
-        ]
-    elif len(points) == 1:
-        return [None, None, points[0]]
+    
+def add_point(tree, point):
+        if point[0] < tree[2][0]:
+            if tree[0] is None:
+                tree[0] = [None,None,point]
+            else:
+                add_point(tree[0], point)
+        else:
+            if tree[1] is None:
+                tree[1] = [None,None,point]
+            else:
+                add_point(tree[1], point)
 
 # build tree from given points
 def BuildTree():
-    points = [(random.uniform(0,100),random.uniform(0,100)) for x in range(1000)]
-    tree = tree_constructor(points)
+    #points = [(random.uniform(0,100),random.uniform(0,100)) for x in range(1000)]
+    #tree = tree_constructor(points)
+    tree = [None,None,(random.uniform(0,100),random.uniform(0,100))]
+    for i in range(10):
+        point=(random.uniform(0,100),random.uniform(0,100))
+        add_point(tree,point)
     return tree
 
 # null object if nearest point not found
@@ -51,7 +52,7 @@ def NearestRightPoint(node, line, best=None):
 def main():
     # build tree
     tree = BuildTree()
-
+    print(tree)
     # finds nearest
     line = input('enter the line coordinates: ')
     result = NearestRightPoint(tree, float(line))
